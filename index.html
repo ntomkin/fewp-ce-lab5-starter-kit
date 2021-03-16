@@ -1,0 +1,80 @@
+<!--
+    Hey! Look!
+
+    In Lab 5, we're trying to create a React application from absolute scratch. In Lab 6 and Lab 7, we will
+    get into using create-react-app, and the building of a typical application. Lab 5 is all about understanding
+    React on a fundamental level before you implement a toolchain as part of your workflow.
+
+    In this example, you start off with a Clock (parent) and ClockDisplay (child). It shows the relationship
+    between parent and children components, state, and props. 
+
+    If you are using this file as your starting point, replace this comment with your Statement of Authorship.
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js" integrity="sha512-kp7YHLxuJDJcOzStgd6vtpxr4ZU9kjn77e6dBsivSz+pUuAuMlE2UTdKB7jjsWT84qbS8kdCWHPETnP/ctrFsA==" crossorigin="anonymous"></script>
+
+    <title>Lab 5</title>
+
+    <script type="text/babel">
+        class ClockDisplay extends React.Component {
+            constructor(props) {
+                super(props);
+            }
+
+            render() {
+                return <span>{this.props.time}</span>;
+            }
+        }
+
+        class Clock extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {date: new Date()};
+            }
+
+            componentDidMount() {
+                this.timerID = setInterval(
+                    () => this.tick(),
+                    1000
+                );
+            }
+
+            componentWillUnmount() {
+                clearInterval(this.timerID);
+            }
+
+            tick() {
+                this.setState({
+                    date: new Date()
+                });
+            }
+
+            render() {
+                return (
+                    <div>
+                        <h1>Hello, world!</h1>
+                        <div>It is <ClockDisplay time={this.state.date.toLocaleTimeString()} /></div>
+                    </div>
+                );
+            }
+        }
+
+        ReactDOM.render(
+            <Clock />,
+            document.getElementById('root')
+        );
+    </script>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+</html>
